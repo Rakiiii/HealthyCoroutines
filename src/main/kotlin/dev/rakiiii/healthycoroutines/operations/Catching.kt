@@ -95,16 +95,6 @@ suspend fun ignoreError(
  *
  * Rethrows [CancellationException]
  * Uses [DefaultCatchingLogger] for exceptions logging
- */
-suspend fun <T> (suspend () -> T).getOrNull(): T? {
-    return returnOrDefault(DefaultCatchingLogger, null, this)
-}
-
-/**
- * Exception handling helper for getting null on error
- *
- * Rethrows [CancellationException]
- * Uses [DefaultCatchingLogger] for exceptions logging
  *
  * @param action Operation
  */

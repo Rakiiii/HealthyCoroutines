@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.rakiiii.healthycoroutines"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -50,7 +50,7 @@ publishing {
 
             artifactId = "healthycoroutines"
 
-            version = "1.0.0"
+            version = "1.0.1"
 
             from(components["java"])
 
