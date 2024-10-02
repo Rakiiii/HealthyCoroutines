@@ -5,15 +5,13 @@ plugins {
 }
 
 group = "dev.rakiiii.healthycoroutines"
-version = "1.0.0-RC"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
 }
 
 java {
-    withSourcesJar()
-    withJavadocJar()
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
@@ -52,7 +50,7 @@ publishing {
 
             artifactId = "healthycoroutines"
 
-            version = "1.0.0-RC"
+            version = "1.0.0"
 
             from(components["java"])
 
