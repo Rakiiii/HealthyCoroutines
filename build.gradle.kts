@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.rakiiii.healthycoroutines"
-version = "1.0-RC"
+version = "1.0.0-RC"
 
 repositories {
     mavenCentral()
@@ -37,7 +37,7 @@ tasks.test {
 val sourcesJar by tasks.creating(Jar::class) {
     archiveClassifier.set("sources")
     from(sourceSets.getByName("main").allSource)
-    from("LICENCE.md") {
+    from("LICENCE.txt") {
         into("META-INF")
     }
 }
@@ -52,7 +52,7 @@ publishing {
 
             artifactId = "healthycoroutines"
 
-            version = "1.0-RC"
+            version = "1.0.0-RC"
 
             from(components["java"])
 
