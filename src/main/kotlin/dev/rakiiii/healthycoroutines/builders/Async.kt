@@ -82,6 +82,7 @@ inline fun <R : Any> CoroutineScope.startComputationInCustomScope(
  * Coroutine builder for async calls on custom dispatcher
  *
  * @param context [DependentCoroutineContext] Context for non-root coroutine, by default contains [logAndRethrowError] for completion error
+ * @param dispatcher [CustomCoroutineDispatcher]
  * @param block coroutine code
  */
 inline fun <R> CoroutineScopeHolder.startOnCustomDispatcher(
@@ -96,6 +97,7 @@ inline fun <R> CoroutineScopeHolder.startOnCustomDispatcher(
  * Coroutine builder for async calls on custom dispatcher
  *
  * @param context [DependentCoroutineContext] Context for non-root coroutine, by default contains [logAndRethrowError] for completion error
+ * @param dispatcher [CustomCoroutineDispatcher]
  * @param block coroutine code
  */
 inline fun <R : Any> CoroutineScope.startOnCustomDispatcherInCustomScope(
