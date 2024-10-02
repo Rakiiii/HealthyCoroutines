@@ -1,0 +1,109 @@
+/*
+ * Copyright 2024-today Evgeniy S. Sudarskiy 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.rakiiii.healthycoroutines.builders
+
+import dev.rakiiii.healthycoroutines.api.AsyncableBaseCoroutineContainer
+import dev.rakiiii.healthycoroutines.api.BaseCoroutineContainer
+import dev.rakiiii.healthycoroutines.api.CustomCoroutineDispatcher
+import dev.rakiiii.healthycoroutines.api.SimpleDeferred
+import dev.rakiiii.healthycoroutines.api.dependentcontext.DependentCoroutineContext
+import dev.rakiiii.healthycoroutines.api.dependentcontext.completionExceptionHandler
+import dev.rakiiii.healthycoroutines.handlers.logAndRethrowError
+import dev.rakiiii.healthycoroutines.handlers.logError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
+
+/**
+ * Standalone IO coroutine builder for coroutine container
+ *
+ * @param context [CoroutineContext] by default contains [logError]
+ * @param block coroutine code
+ */
+fun <T: BaseCoroutineContainer> T.onIo(
+    context: CoroutineContext = logError(),
+    block: suspend CoroutineScope.() -> Unit,
+) {
+    startCoroutine(context = context, coroutineDispatcher = Dispatchers.IO, block = block)
+}
+
+/**
+ * Standalone Default coroutine builder for coroutine container
+ *
+ * @param context [CoroutineContext] by default contains [logError]
+ * @param block coroutine code
+ */
+fun <T: BaseCoroutineContainer> T.onComputation(
+    context: CoroutineContext = logError(),
+    block: suspend CoroutineScope.() -> Unit,
+) {
+    startCoroutine(context = context, coroutineDispatcher = Dispatchers.Default, block = block)
+}
+
+/**
+ * Standalone CustomDispatcher coroutine builder for coroutine container
+ *
+ * @param context [CoroutineContext] by default contains [logError]
+ * @param block coroutine code
+ */
+fun <T : BaseCoroutineContainer> T.onCustomDispatcher(
+    context: CoroutineContext = logError(),
+    dispatcher: CustomCoroutineDispatcher,
+    block: suspend CoroutineScope.() -> Unit,
+) {
+    startCoroutine(coroutineDispatcher = dispatcher, context = context, block = block)
+}
+
+/**
+ * Async IO coroutine builder for coroutine container
+ *
+ * @param context [CoroutineContext] by default contains [logError]
+ * @param block coroutine code
+ */
+fun <T: AsyncableBaseCoroutineContainer, R : Any> T.startIo(
+    context: DependentCoroutineContext = completionExceptionHandler(logAndRethrowError()),
+    block: suspend CoroutineScope.() -> R,
+): SimpleDeferred<R> {
+    return startCoroutineWithResult(coroutineDispatcher = Dispatchers.IO, context = context, block = block)
+}
+
+/**
+ * Async Default coroutine builder for coroutine container
+ *
+ * @param context [CoroutineContext] by default contains [logError]
+ * @param block coroutine code
+ */
+fun <T: AsyncableBaseCoroutineContainer, R> T.startComputation(
+    context: DependentCoroutineContext = completionExceptionHandler(logAndRethrowError()),
+    block: suspend CoroutineScope.() -> R,
+): SimpleDeferred<R> {
+    return startCoroutineWithResult(coroutineDispatcher = Dispatchers.Default, context = context, block = block)
+}
+
+/**
+ * Async CustomDispatcher coroutine builder for coroutine container
+ *
+ * @param context [CoroutineContext] by default contains [logError]
+ * @param block coroutine code
+ */
+fun <T: AsyncableBaseCoroutineContainer, R> T.startOnCustomDispatcher(
+    context: DependentCoroutineContext = completionExceptionHandler(logAndRethrowError()),
+    dispatcher: CustomCoroutineDispatcher,
+    block: suspend CoroutineScope.() -> R,
+): SimpleDeferred<R> {
+    return startCoroutineWithResult(coroutineDispatcher = dispatcher, context = context, block = block)
+}
