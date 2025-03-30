@@ -16,7 +16,7 @@
 
 package dev.rakiiii.healthycoroutines.containers
 
-import dev.rakiiii.healthycoroutines.api.BaseCoroutineContainer
+import dev.rakiiii.healthycoroutines.api.AsyncableBaseCoroutineContainer
 import dev.rakiiii.healthycoroutines.api.CoroutineScopeHolder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -40,7 +40,7 @@ import kotlinx.coroutines.Job
  * }
  * ```
  */
-fun <T> T.simpleCoroutineContainer(): BaseCoroutineContainer where T : CoroutineScopeHolder {
+fun <T> T.simpleCoroutineContainer(): AsyncableBaseCoroutineContainer where T : CoroutineScopeHolder {
     return SimpleCoroutineContainer(coroutineScope)
 }
 
@@ -65,7 +65,7 @@ fun <T> T.simpleCoroutineContainer(): BaseCoroutineContainer where T : Coroutine
  *
  * @param coroutineScope [CoroutineScope] for all coroutines started in the container
  */
-fun simpleCoroutineContainer(coroutineScope: CoroutineScope): BaseCoroutineContainer {
+fun simpleCoroutineContainer(coroutineScope: CoroutineScope): AsyncableBaseCoroutineContainer {
     return SimpleCoroutineContainer(coroutineScope)
 }
 
